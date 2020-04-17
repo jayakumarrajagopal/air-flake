@@ -8,7 +8,9 @@ def check_for_non_ascii(sourcefile,bulksize=10000):
         for line in F:
             lines +=1
             for c in line:
-                if c not in string.printable:
+                # if c not in string.printable: # this is inefficient..looping 100 chars
+                asciino = ord(c)
+                if asciino < 9 or asciino > 126 or ( asciino > 13 and asciino < 32 ):
                     raise Exception("Invalid Char " + str(ord(c)) + "present in "+ str( line ) )
             if lines % bulksize == 0 :
                 yield lines 
